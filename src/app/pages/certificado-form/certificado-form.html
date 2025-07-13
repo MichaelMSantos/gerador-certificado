@@ -1,4 +1,4 @@
-<div class="d-flex flex-column align-items-center">
+<form #form="ngForm" novalidate class="d-flex flex-column align-items-center">
     <div class="content-titles">
         <h1 class="fw-bold custom-title">Geração de certificados</h1>
         <p class="custom-subtitle mb-4">Preencha os dados para gerar um novo certificado</p>
@@ -6,33 +6,43 @@
     <div class="custom-card w-100">
         <h2 class="card-title">Novo certificado</h2>
         <div class="mb-3 custom-input-group">
-            <label class="form-label" for="nome">Nome</label>
-            <input id="nome" type="text" class="form-control custom-input" placeholder="Nome do Aluno">
+            <label [ngClass]="{'text-danger-label' : campoInvalido(nomeRef)}" class="form-label" for="nome">Nome</label>
+            <input [(ngModel)]="nome" #nomeRef="ngModel" name="nome" maxlength="150" required id="nome" type="text"
+                class="form-control custom-input" placeholder="Nome do Aluno">
+            @if (campoInvalido(nomeRef)) {
             <div class="error-message d-flex align-items-center">
                 <i class="ph ph-warning-circle"></i>
-                <p class="m-0">Error message</p>
+                <p class="m-0">O nome do aluno é obrigatório</p>
             </div>
+            }
         </div>
         <div class="mb-3 d-flex align-items-end custom-input-group">
             <div class="flex-grow-1 me-2">
-                <label class="form-label" for="atividade">Atividade</label>
-                <input id="atividade" type="text" class="form-control custom-input" placeholder="Atividade">
+                <label class="form-label"
+                    for="atividade">Atividade</label>
+                <input #atividadeRef="ngModel" [(ngModel)]="atividade" name="atividade" max="50" required id="atividade"
+                    type="text" class="form-control custom-input" placeholder="Atividade">
             </div>
-            <app-secondary-button />
+            <app-secondary-button (click)="adicionarAtividade()" [disabled]="atividade.length == 0" txtBtn="Adicionar" phClass="ph ph-plus"
+            [ngStyle]="campoInvalido(atividadeRef) ? ({'margin-bottom': '24px'}) : ({})" />
         </div>
         <div class="atividade-group">
             <label class="form-label">Lista de Atividades</label>
             <div class="item-list w-100">
+                @for (atividade of atividades; track $index) {
                 <div class="item">
-                    <span class="item-text">Configuração com angular CLI</span>
-                    <div class="remove-btn">
+                    <span class="item-text">{{atividade}}</span>
+                    <div (click)="excluirAtividade($index)" class="remove-btn">
                         <i class="ph-bold ph-x"></i>
                     </div>
                 </div>
+                @if ($index + 1 != atividades.length) {
                 <hr>
+                }
+                }
             </div>
         </div>
 
-        <app-primary-button />
+        <app-primary-button [disabled]="!formValido()"  textBtn="Gerar certificado" />
     </div>
-</div>
+</form>
