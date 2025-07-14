@@ -23,7 +23,7 @@
                 <input #atividadeRef="ngModel" [(ngModel)]="atividade" name="atividade" max="50" required id="atividade"
                     type="text" class="form-control custom-input" placeholder="Atividade">
             </div>
-            <app-secondary-button (click)="adicionarAtividade()" [disabled]="atividade.length == 0" txtBtn="Adicionar" phClass="ph ph-plus"
+            <app-secondary-button (click)="adicionarAtividade()" [disabled]="!atividade || atividade.length == 0" txtBtn="Adicionar" phClass="ph ph-plus"
             [ngStyle]="campoInvalido(atividadeRef) ? ({'margin-bottom': '24px'}) : ({})" />
         </div>
         <div class="atividade-group">
@@ -43,6 +43,6 @@
             </div>
         </div>
 
-        <app-primary-button [disabled]="!formValido()"  textBtn="Gerar certificado" />
+        <app-primary-button [disabled]="!formValido()" (click)="submit()" textBtn="Gerar certificado" />
     </div>
 </form>

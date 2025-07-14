@@ -11,5 +11,6 @@ export class CertificadoService {
 
   adicionarCertificado(certificado: ICertificado) {
     this.certificados.push({ ...certificado })
+    localStorage.setItem('certificados', JSON.stringify(this.certificados))
   }
 }
