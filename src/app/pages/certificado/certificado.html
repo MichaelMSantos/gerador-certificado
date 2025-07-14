@@ -4,9 +4,13 @@
             <i class="ph ph-arrow-left"></i>
             <p class="m-0">Voltar</p>
         </div>
-        <app-secondary-button />
+        @if (!certificado) { <app-secondary-button phClass="ph ph-download-simple" txtBtn="Download"
+            [disabled]="true" />} @else {
+        <app-secondary-button phClass="ph ph-download-simple" txtBtn="Download" (click)="download()" />
+        }
     </div>
-    <div class="certificado d-flex justify-content-center align-items-center">
+    @if (certificado) {
+    <div #certificadoContainer class="certificado d-flex justify-content-center align-items-center">
         <img class="icone-medalha" src="/certificate/Certificate_Ribbon.png" alt="icone de medalha">
         <div class="conteudo-certificado">
             <img class="img-assinatura" src="/certificate/Certificate_Signature.svg" alt="assinatura">
@@ -15,13 +19,14 @@
                     <h1>CERTIFICADO DE CONCLUSÃO</h1>
                     <p>Este certificado comprova que</p>
                 </div>
-                <p class="nome-aluno">Real</p>
+                <p class="nome-aluno">{{certificado.nome}}</p>
                 <div class="">
                     <p class="lista-atividade-titulo">Concluiu com sucesso as seguintes atividades:</p>
-                    <p class="lista-atividade">sla atividade</p>
+                    <p class="lista-atividade">{{certificado.atividades}}</p>
                 </div>
             </div>
-            <p class="data-emissao">Emitido em</p>
+            <p class="data-emissao">Emitido em {{certificado.dataEmissao}}</p>
         </div>
     </div>
+    }
 </div>
