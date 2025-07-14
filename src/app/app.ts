@@ -15,7 +15,6 @@ export class App implements OnInit{
   constructor(private certificadoService: CertificadoService){}
 
   ngOnInit(): void {
-      const certificados = localStorage.getItem('certificados')
-      this.certificadoService = certificados ? JSON.parse(certificados) : []
+      this.certificadoService.carregarCertificados()
   }
 }
