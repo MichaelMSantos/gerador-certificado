@@ -7,7 +7,7 @@
         <h2 class="card-title">Novo certificado</h2>
         <div class="mb-3 custom-input-group">
             <label [ngClass]="{'text-danger-label' : campoInvalido(nomeRef)}" class="form-label" for="nome">Nome</label>
-            <input [(ngModel)]="nome" #nomeRef="ngModel" name="nome" maxlength="150" required id="nome" type="text"
+            <input [(ngModel)]="certificado.nome" #nomeRef="ngModel" name="nome" maxlength="150" required id="nome" type="text"
                 class="form-control custom-input" placeholder="Nome do Aluno">
             @if (campoInvalido(nomeRef)) {
             <div class="error-message d-flex align-items-center">
@@ -29,14 +29,14 @@
         <div class="atividade-group">
             <label class="form-label">Lista de Atividades</label>
             <div class="item-list w-100">
-                @for (atividade of atividades; track $index) {
+                @for (atividade of certificado.atividades; track $index) {
                 <div class="item">
                     <span class="item-text">{{atividade}}</span>
                     <div (click)="excluirAtividade($index)" class="remove-btn">
                         <i class="ph-bold ph-x"></i>
                     </div>
                 </div>
-                @if ($index + 1 != atividades.length) {
+                @if ($index + 1 != certificado.atividades.length) {
                 <hr>
                 }
                 }
